@@ -1,0 +1,36 @@
+/* src/App.module.css */
+.appContainer {
+  min-height: 100vh;
+  /* Додаємо відступ зверху, щоб контент не ховався під фіксованою навігацією */
+  padding-top: 2rem; /* Припустимо, висота навігації 4rem */
+}
+
+.mainNav {
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  /* Фіксуємо навігацію вгорі */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000; /* Гарантуємо, що навігація буде поверх іншого контенту */
+}
+
+.navList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.navLink {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.content {
+  padding: 2rem;
+  text-align: center;
+}
