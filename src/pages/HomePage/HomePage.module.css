@@ -36,25 +36,74 @@
   color: var(--yellow); /* Ваш вибір */
 }
 
-@media (min-width: 768px) {
-  /* md breakpoint */
-  .mainTitle {
-    font-size: 3rem; /* 48px */
-  }
+/* src/pages/HomePage/HomePage.module.css */
+.homePageContainer {
+  min-height: 100vh;
+  display: flex;
+  /* Горизонтальне центрування */
+  justify-content: center;
+  /* Вертикальне вирівнювання до низу */
+  align-items: flex-end; /* Переміщує елементи до нижнього краю */
+  background-color: var(--gray-light);
+
+  /* Додаємо фонове зображення */
+  background-image: url("../../assets/hero-postmark-bg.webp");
+  background-size: cover; /* Зображення покриває всю площу */
+  background-position: center; /* Центруємо зображення */
+  background-repeat: no-repeat; /* Забороняємо повторення */
+  overflow: hidden; /* Прибираємо зайвий скрол */
+}
+
+.bannerContent {
+  background-color: transparent;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  max-width: 48rem; /* 768px */
+  text-align: center;
+  /* Додаємо відступ 20px від низу до самого вмісту */
+  margin-bottom: 20px;
+}
+
+.mainTitle {
+  font-size: 2.5rem; /* 40px */
+  line-height: 1;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--yellow);
 }
 
 .description {
   font-size: 1.125rem; /* 18px */
   line-height: 1.75rem; /* 28px */
-  color: var(--yellow); /* Ваш вибір */
+  color: var(--yellow);
   margin-bottom: 2rem;
 }
 
+/* Styles for Tablet and Desktop devices (md breakpoint) */
 @media (min-width: 768px) {
-  /* md breakpoint */
+  .mainTitle {
+    font-size: 3rem; /* 48px */
+  }
   .description {
     font-size: 1.25rem; /* 20px */
   }
+}
+
+.catalogButton {
+  padding: 1rem 2rem;
+  background-color: var(--button);
+  color: var(--white);
+  font-weight: bold;
+  font-size: 1.125rem; /* 18px */
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.catalogButton:hover {
+  background-color: var(--button-hover);
 }
 
 .catalogButton {

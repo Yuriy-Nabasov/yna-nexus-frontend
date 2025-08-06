@@ -4,9 +4,15 @@
   /* Додаємо відступ зверху, щоб контент не ховався під фіксованою навігацією */
   padding-top: 2rem; /* Припустимо, висота навігації 4rem */
 }
-
+/* c8d3e4 */
 .mainNav {
-  background-color: #333;
+  /* background-color: #b0b9ca; */
+  background-image: linear-gradient(to right, #c8d3e4, #b0b9ca);
+  /* background-image: linear-gradient(
+    to right,
+    rgba(200, 211, 228, 0.9),
+    rgba(176, 185, 202, 0.9)
+  ); */
   color: white;
   padding: 1rem;
   /* Фіксуємо навігацію вгорі */
