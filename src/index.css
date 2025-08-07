@@ -8,7 +8,7 @@
   --white: #fff;
   --button: #3470ff;
   --button-hover: #0b44cd;
-  --yellow: #ffd700; /* Додано жовтий колір */
+  --yellow: #ffd700;
 
   --font-family: "Manrope", sans-serif;
   --second-family: "Inter", sans-serif;
@@ -119,11 +119,9 @@ section {
   display: block;
 }
 
-/* Оновлені стилі для html та body */
 html,
 body {
-  height: 100%; /* Забезпечуємо, що вони займають всю висоту вікна */
-  overflow-y: hidden; /* Прибираємо вертикальний скрол */
+  height: 100%;
 }
 
 body {

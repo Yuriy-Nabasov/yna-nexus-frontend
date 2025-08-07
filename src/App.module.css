@@ -1,25 +1,13 @@
 /* src/App.module.css */
-.appContainer {
-  min-height: 100vh;
-  /* Додаємо відступ зверху, щоб контент не ховався під фіксованою навігацією */
-  padding-top: 2rem; /* Припустимо, висота навігації 4rem */
-}
-/* c8d3e4 */
+
 .mainNav {
-  /* background-color: #b0b9ca; */
   background-image: linear-gradient(to right, #c8d3e4, #b0b9ca);
-  /* background-image: linear-gradient(
-    to right,
-    rgba(200, 211, 228, 0.9),
-    rgba(176, 185, 202, 0.9)
-  ); */
   color: white;
   padding: 1rem;
-  /* Фіксуємо навігацію вгорі */
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000; /* Гарантуємо, що навігація буде поверх іншого контенту */
+  z-index: 1000;
 }
 
 .navList {
@@ -39,4 +27,10 @@
 .content {
   padding: 2rem;
   text-align: center;
+}
+
+.contentContainer {
+  padding-top: 5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }

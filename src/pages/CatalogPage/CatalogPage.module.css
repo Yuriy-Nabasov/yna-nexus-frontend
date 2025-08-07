@@ -1,0 +1,12 @@
+/* src/pages/CatalogPage/CatalogPage.module.css */
+
+.catalogPage {
+  padding: 20px;
+}
+
+.stampsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}

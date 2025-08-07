@@ -1,10 +1,10 @@
 // src/App.jsx
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import HomePage from "./pages/HomePage/HomePage"; // Імпортуємо HomePage
-import css from "./App.module.css"; // Імпортуємо стилі для App
+import HomePage from "./pages/HomePage/HomePage";
+import CatalogPage from "./pages/CatalogPage/CatalogPage";
+import css from "./App.module.css";
 
 // Заглушки для інших сторінок
-const CatalogPage = () => <div className={css.content}>Сторінка каталогу</div>;
 const CollectedStampsPage = () => (
   <div className={css.content}>Моя колекція</div>
 );
@@ -47,14 +47,15 @@ function App() {
           </ul>
         </nav>
 
-        <Routes>
-          <Route path="/" element={<HomePage />} />{" "}
-          {/* Використовуємо імпортований компонент */}
-          <Route path="/catalog" element={<CatalogPage />} />
-          <Route path="/collected" element={<CollectedStampsPage />} />
-          <Route path="/desired" element={<DesiredStampsPage />} />
-          <Route path="/exchange" element={<ExchangeStampsPage />} />
-        </Routes>
+        <div className={css.contentContainer}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/catalog" element={<CatalogPage />} />
+            <Route path="/collected" element={<CollectedStampsPage />} />
+            <Route path="/desired" element={<DesiredStampsPage />} />
+            <Route path="/exchange" element={<ExchangeStampsPage />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );
