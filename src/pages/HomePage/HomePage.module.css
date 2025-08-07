@@ -2,47 +2,7 @@
 .homePageContainer {
   min-height: 100vh;
   display: flex;
-  /* Горизонтальне центрування */
   justify-content: center;
-  /* Вертикальне вирівнювання до низу */
-  align-items: flex-end; /* Переміщує елементи до нижнього краю */
-  background-color: var(--gray-light);
-  /* padding: 1rem; */ /* Видалено, як ви і вказали */
-
-  /* Додаємо фонове зображення */
-  background-image: url("../../assets/hero-postmark-bg.webp");
-  background-size: cover; /* Зображення покриває всю площу */
-  background-position: center; /* Центруємо зображення */
-  background-repeat: no-repeat; /* Забороняємо повторення */
-  overflow: hidden; /* Прибираємо зайвий скрол */
-}
-
-.bannerContent {
-  background-color: transparent;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-  max-width: 48rem; /* 768px */
-  text-align: center;
-  /* Додаємо відступ 20px від низу до самого вмісту */
-  margin-bottom: 20px;
-}
-
-.mainTitle {
-  font-size: 2.5rem; /* 40px */
-  line-height: 1;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  color: var(--yellow); /* Ваш вибір */
-}
-
-/* src/pages/HomePage/HomePage.module.css */
-.homePageContainer {
-  min-height: 100vh;
-  display: flex;
-  /* Горизонтальне центрування */
-  justify-content: center;
-  /* Вертикальне вирівнювання до низу */
   align-items: flex-end; /* Переміщує елементи до нижнього краю */
   background-color: var(--gray-light);
 
@@ -61,7 +21,6 @@
   padding: 2rem;
   max-width: 48rem; /* 768px */
   text-align: center;
-  /* Додаємо відступ 20px від низу до самого вмісту */
   margin-bottom: 20px;
 }
 
