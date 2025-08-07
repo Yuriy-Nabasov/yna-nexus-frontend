@@ -5,6 +5,7 @@ import stampPlaceholder from "../../assets/images/stamp-placeholder.webp";
 
 const StampCard = ({ stamp }) => {
   const imageSrc = stamp.picture || stampPlaceholder;
+
   return (
     <div className={css.card}>
       <div className={css.imageContainer}>

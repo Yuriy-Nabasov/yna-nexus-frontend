@@ -15,14 +15,21 @@ const initialState = {
 
 export const fetchAllStamps = createAsyncThunk(
   "stamps/fetchAllStamps",
-  async (page = 1, thunkAPI) => {
+  async (options, thunkAPI) => {
     try {
+      const {
+        page,
+        perPage = 12,
+        sortBy = "createdAt",
+        sortOrder = "desc",
+      } = options;
+
       const response = await axios.get(BASE_URL, {
-        params: { page, perPage: 12 },
+        params: { page, perPage, sortBy, sortOrder },
       });
 
       return {
-        items: response.data.data.data, // Забираємо масив марок з глибокої вкладеності
+        items: response.data.data.data,
         pagination: response.data.data,
       };
     } catch (error) {
@@ -35,11 +42,6 @@ const stampsSlice = createSlice({
   name: "stamps",
   initialState,
   reducers: {
-    clearStamps(state) {
-      state.items = [];
-      state.page = 1;
-      state.totalPages = 1;
-    },
     setPage(state, action) {
       state.page = action.payload;
     },
@@ -56,11 +58,12 @@ const stampsSlice = createSlice({
         const { items, pagination } = action.payload;
 
         if (pagination) {
-          state.items =
-            pagination.page === 1 ? items : [...state.items, ...items];
+          state.items = items;
+          state.page = pagination.page;
           state.totalPages = pagination.totalPages;
         } else {
           state.items = items;
+          state.page = 1;
           state.totalPages = 1;
         }
       })
@@ -71,5 +74,5 @@ const stampsSlice = createSlice({
   },
 });
 
-export const { clearStamps, setPage } = stampsSlice.actions;
+export const { setPage } = stampsSlice.actions;
 export const stampsReducer = stampsSlice.reducer;
