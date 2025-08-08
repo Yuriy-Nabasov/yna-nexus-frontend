@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllStamps, setPage } from "../../redux/stamps/stampsSlice";
 import StampCard from "../../components/StampCard/StampCard";
+import FilterComponent from "../../components/FilterComponent/FilterComponent";
 import { BeatLoader } from "react-spinners";
 import css from "./CatalogPage.module.css";
 
@@ -14,10 +15,11 @@ const CatalogPage = () => {
   const totalPages = useSelector((state) => state.stamps.totalPages);
   const isLoading = useSelector((state) => state.stamps.isLoading);
   const error = useSelector((state) => state.stamps.error);
+  const filters = useSelector((state) => state.stamps.filters);
 
   useEffect(() => {
-    dispatch(fetchAllStamps({ page }));
-  }, [dispatch, page]);
+    dispatch(fetchAllStamps({ page, filters }));
+  }, [dispatch, page, filters]);
 
   const handlePageChange = (newPage) => {
     if (newPage < 1 || newPage > totalPages || newPage === page) return;
@@ -27,9 +29,26 @@ const CatalogPage = () => {
 
   const renderPaginationButtons = () => {
     const buttons = [];
-    const pageRange = 2; // Кількість кнопок з кожного боку поточної
+    const pageRange = 2;
 
-    // Кнопка для першої сторінки
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) {
+        buttons.push(
+          <button
+            key={i}
+            className={`${css.paginationButton} ${
+              page === i ? css.active : ""
+            }`}
+            onClick={() => handlePageChange(i)}
+            disabled={page === i}
+          >
+            {i}
+          </button>
+        );
+      }
+      return buttons;
+    }
+
     if (page > pageRange + 1) {
       buttons.push(
         <button
@@ -47,7 +66,6 @@ const CatalogPage = () => {
       );
     }
 
-    // Кнопки для поточної та сусідніх сторінок
     const start = Math.max(1, page - pageRange);
     const end = Math.min(totalPages, page + pageRange);
     for (let i = start; i <= end; i++) {
@@ -63,7 +81,6 @@ const CatalogPage = () => {
       );
     }
 
-    // Три крапки для кінця
     if (page < totalPages - pageRange) {
       buttons.push(
         <span key="dots-end" className={css.paginationDots}>
@@ -72,7 +89,6 @@ const CatalogPage = () => {
       );
     }
 
-    // Кнопка для останньої сторінки
     if (page < totalPages - pageRange) {
       buttons.push(
         <button
@@ -85,31 +101,13 @@ const CatalogPage = () => {
       );
     }
 
-    // Якщо кнопок менше, ніж 5, показуємо всі
-    if (totalPages <= 5) {
-      buttons.length = 0;
-      for (let i = 1; i <= totalPages; i++) {
-        buttons.push(
-          <button
-            key={i}
-            className={`${css.paginationButton} ${
-              page === i ? css.active : ""
-            }`}
-            onClick={() => handlePageChange(i)}
-            disabled={page === i}
-          >
-            {i}
-          </button>
-        );
-      }
-    }
-
     return buttons;
   };
 
   return (
     <div className={css.catalogPage}>
       <h1 style={{ textAlign: "center", marginBottom: "20px" }}>Каталог</h1>
+      <FilterComponent />
       {Array.isArray(stamps) && (
         <div className={css.stampsGrid}>
           {stamps.map((stamp) => (

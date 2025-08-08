@@ -9,6 +9,10 @@ const initialState = {
   items: [],
   page: 1,
   totalPages: 1,
+  filters: {
+    topic: "",
+    year: "",
+  },
   isLoading: false,
   error: null,
 };
@@ -18,19 +22,27 @@ export const fetchAllStamps = createAsyncThunk(
   async (options, thunkAPI) => {
     try {
       const {
-        page,
+        page = 1,
         perPage = 12,
         sortBy = "createdAt",
         sortOrder = "desc",
+        filters,
       } = options;
 
-      const response = await axios.get(BASE_URL, {
-        params: { page, perPage, sortBy, sortOrder },
-      });
+      const params = {
+        page,
+        perPage,
+        sortBy,
+        sortOrder,
+        ...filters,
+      };
+
+      const response = await axios.get(BASE_URL, { params });
 
       return {
         items: response.data.data.data,
         pagination: response.data.data,
+        filters,
       };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -45,6 +57,10 @@ const stampsSlice = createSlice({
     setPage(state, action) {
       state.page = action.payload;
     },
+    setFilters(state, action) {
+      state.filters = action.payload;
+      state.page = 1;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,16 +71,18 @@ const stampsSlice = createSlice({
       .addCase(fetchAllStamps.fulfilled, (state, action) => {
         state.isLoading = false;
 
-        const { items, pagination } = action.payload;
+        const { items, pagination, filters } = action.payload;
 
         if (pagination) {
           state.items = items;
           state.page = pagination.page;
           state.totalPages = pagination.totalPages;
+          state.filters = filters;
         } else {
           state.items = items;
           state.page = 1;
           state.totalPages = 1;
+          state.filters = filters;
         }
       })
       .addCase(fetchAllStamps.rejected, (state, action) => {
@@ -74,5 +92,5 @@ const stampsSlice = createSlice({
   },
 });
 
-export const { setPage } = stampsSlice.actions;
+export const { setPage, setFilters } = stampsSlice.actions;
 export const stampsReducer = stampsSlice.reducer;
