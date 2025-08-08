@@ -3,7 +3,7 @@
 .mainNav {
   background-image: linear-gradient(to right, #c8d3e4, #b0b9ca);
   color: white;
-  padding: 1rem;
+  padding: 16px;
   position: fixed;
   top: 0;
   width: 100%;
@@ -15,7 +15,7 @@
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 1rem;
+  gap: 16px;
 }
 
 .navLink {

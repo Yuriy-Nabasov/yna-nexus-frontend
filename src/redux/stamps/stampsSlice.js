@@ -7,6 +7,7 @@ const BASE_URL = "https://yna-nexus-api.onrender.com/stamps";
 
 const initialState = {
   items: [],
+  currentItem: null,
   page: 1,
   totalPages: 1,
   filters: {
@@ -44,6 +45,18 @@ export const fetchAllStamps = createAsyncThunk(
         pagination: response.data.data,
         filters,
       };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchStampById = createAsyncThunk(
+  "stamps/fetchStampById",
+  async (stampId, thunkAPI) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/${stampId}`);
+      return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -88,6 +101,20 @@ const stampsSlice = createSlice({
       .addCase(fetchAllStamps.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(fetchStampById.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.currentItem = null; // Очищаємо дані попередньої марки
+      })
+      .addCase(fetchStampById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentItem = action.payload; // Зберігаємо отриману марку
+      })
+      .addCase(fetchStampById.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.currentItem = null;
       });
   },
 });

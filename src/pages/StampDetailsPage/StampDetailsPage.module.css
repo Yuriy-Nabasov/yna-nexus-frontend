@@ -1,0 +1,89 @@
+/* src/pages/StampDetailsPage/StampDetailsPage.module.css */
+
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 4rem;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.backButtonWrapper {
+  margin-bottom: 2rem;
+}
+
+.backButton {
+  background-color: var(--button);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.backButton:hover {
+  background-color: var(--button-hover);
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.detailsGrid {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.stampImage {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.info {
+  flex-grow: 1;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.info p {
+  margin-bottom: 0.8rem;
+}
+
+.info strong {
+  color: #555;
+}
+
+.loading,
+.error,
+.notFound {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  color: #d9534f;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .detailsGrid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .stampImage {
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  .title {
+    font-size: 2rem;
+  }
+}
