@@ -1,6 +1,6 @@
 // src/redux/store.js
 
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -13,19 +13,19 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { stampsReducer } from "./stamps/stampsSlice";
-import { combineReducers } from "@reduxjs/toolkit";
+import { authReducer } from "./auth/authSlice";
 
-// Конфігурація для redux-persist
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["stamps"],
+  whitelist: ["stamps", "auth"],
 };
 
 // Об'єднуємо всі наші редуктори в один кореневий
 // Використовуємо combineReducers, щоб створити єдиний редуктор
 const rootReducer = combineReducers({
   stamps: stampsReducer,
+  auth: authReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

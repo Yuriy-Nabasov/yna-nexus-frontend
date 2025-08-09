@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/auth/authSlice";
 import css from "./Header.module.css";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <header className={css.mainNav}>
       <ul className={css.navList}>
@@ -31,6 +39,25 @@ const Header = () => {
           </Link>
         </li>
       </ul>
+      <div className={css.authSection}>
+        {isLoggedIn ? (
+          <>
+            <span className={css.greeting}>Привіт, {user?.name}!</span>
+            <button onClick={handleLogout} className={css.logoutButton}>
+              Вихід
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/register" className={css.authButton}>
+              Реєстрація
+            </Link>
+            <Link to="/login" className={css.authButton}>
+              Вхід
+            </Link>
+          </>
+        )}
+      </div>
     </header>
   );
 };

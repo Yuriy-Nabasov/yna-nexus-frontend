@@ -3,11 +3,14 @@
 .mainNav {
   background-image: linear-gradient(to right, #c8d3e4, #b0b9ca);
   color: white;
-  padding: 16px;
+  padding: 1rem;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navList {
@@ -15,11 +18,45 @@
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .navLink {
   color: white;
   text-decoration: none;
   font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: #f0f0f0;
+}
+
+.authSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.greeting {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.authButton,
+.logoutButton {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border: 1px solid white;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.authButton:hover,
+.logoutButton:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
