@@ -14,11 +14,12 @@ import {
 import storage from "redux-persist/lib/storage";
 import { stampsReducer } from "./stamps/stampsSlice";
 import { authReducer } from "./auth/authSlice";
+import userReducer from "./user/userSlice";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["stamps", "auth"],
+  whitelist: ["stamps", "auth", "user"],
 };
 
 // Об'єднуємо всі наші редуктори в один кореневий
@@ -26,6 +27,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   stamps: stampsReducer,
   auth: authReducer,
+  user: userReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

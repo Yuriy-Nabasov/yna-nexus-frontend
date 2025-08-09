@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { register } from "../../redux/auth/authSlice";
+import { register } from "../../redux/auth/authOperations";
 import css from "./RegisterPage.module.css";
 
 const RegisterPage = () => {
@@ -17,13 +17,11 @@ const RegisterPage = () => {
     dispatch(register({ name, email, password }))
       .unwrap()
       .then(() => {
-        // Перенаправлення після успішної реєстрації
         navigate("/catalog");
       })
       .catch((error) => {
-        // Обробка помилок реєстрації
         console.error("Помилка реєстрації:", error);
-        alert(`Помилка реєстрації: ${error}`);
+        // За бажанням, тут можна додати логіку для виведення повідомлення користувачу
       });
   };
 
@@ -38,6 +36,7 @@ const RegisterPage = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             className={css.input}
+            autoComplete="name"
             required
           />
         </label>
@@ -48,6 +47,7 @@ const RegisterPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={css.input}
+            autoComplete="email"
             required
           />
         </label>
@@ -58,7 +58,7 @@ const RegisterPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={css.input}
-            autoComplete="current-password"
+            autoComplete="new-password"
             required
           />
         </label>

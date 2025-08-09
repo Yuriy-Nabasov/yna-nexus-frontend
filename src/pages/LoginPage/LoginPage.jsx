@@ -1,8 +1,9 @@
 // src/pages/LoginPage/LoginPage.jsx
+
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../redux/auth/authSlice";
+import { logIn } from "../../redux/auth/authOperations";
 import css from "./LoginPage.module.css";
 
 const LoginPage = () => {
@@ -13,16 +14,14 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login({ email, password }))
+    dispatch(logIn({ email, password }))
       .unwrap()
       .then(() => {
-        // Перенаправлення після успішного входу
         navigate("/catalog");
       })
       .catch((error) => {
-        // Обробка помилок входу
         console.error("Помилка входу:", error);
-        alert(`Помилка входу: ${error}`);
+        // За бажанням, тут можна додати логіку для виведення повідомлення користувачу
       });
   };
 
@@ -37,6 +36,7 @@ const LoginPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={css.input}
+            autoComplete="email"
             required
           />
         </label>

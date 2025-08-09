@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { refreshUser } from "./redux/auth/authSlice";
+import { refreshUser } from "./redux/auth/authOperations";
 
 import Header from "./components/Header/Header";
 import HomePage from "./pages/HomePage/HomePage";
@@ -30,11 +30,14 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
 
 function App() {
   const dispatch = useDispatch();
-  const { isRefreshing } = useSelector((state) => state.auth);
+  const { token, isRefreshing } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+    // Перевіряємо наявність токена перед викликом refreshUser
+    if (token) {
+      dispatch(refreshUser());
+    }
+  }, [dispatch, token]);
 
   return (
     <PersistGate loading={<Loader />} persistor={persistor}>

@@ -64,6 +64,49 @@
   color: #555;
 }
 
+.actionButtons {
+  margin-top: 2rem;
+}
+
+.actionButton {
+  width: 100%;
+  padding: 15px 25px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.actionButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.addButton {
+  background-color: #4caf50;
+}
+
+.addButton:hover:not(:disabled) {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.removeButton {
+  background-color: #f44336;
+}
+
+.removeButton:hover:not(:disabled) {
+  background-color: #da190b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
 .loading,
 .error,
 .notFound {
@@ -85,5 +128,8 @@
   }
   .title {
     font-size: 2rem;
+  }
+  .container {
+    padding: 2rem;
   }
 }

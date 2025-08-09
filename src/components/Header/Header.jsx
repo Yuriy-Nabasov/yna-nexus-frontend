@@ -1,6 +1,8 @@
+// src/components/Header/Header.jsx
+
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../redux/auth/authSlice";
+import { logOut } from "../../redux/auth/authOperations";
 import css from "./Header.module.css";
 
 const Header = () => {
@@ -8,7 +10,7 @@ const Header = () => {
   const { user, isLoggedIn } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logOut());
   };
   return (
     <header className={css.mainNav}>
