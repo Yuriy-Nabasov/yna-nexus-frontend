@@ -52,7 +52,9 @@ const StampDetailsPage = () => {
     setIsProcessing(false);
   };
 
-  const isStampInCollection = collectedStamps.includes(stampId);
+  // 🐛 ВИПРАВЛЕННЯ: Додаємо перевірку, щоб уникнути помилки, якщо collectedStamps ще не завантажений.
+  // Використовуємо оператор опціонального ланцюжка `?.`
+  const isStampInCollection = collectedStamps?.includes(stampId);
 
   if (isLoading) {
     return <div className={css.loading}>Завантаження...</div>;

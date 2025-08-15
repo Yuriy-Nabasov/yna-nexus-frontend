@@ -61,6 +61,20 @@ const FilterComponent = () => {
       </div>
       <div className={css.filterField}>
         <label htmlFor="year-select">Рік:</label>
+        <select
+          id="year-select"
+          value={filters.year}
+          onChange={(e) => handleChange("year", e.target.value)}
+          style={{ display: "none" }} // 🔧 приховуємо, але зберігаємо доступність
+        >
+          <option value="">Усі роки</option>
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+
         <div className={css.customSelect}>
           <div
             className={css.selectedOption}
