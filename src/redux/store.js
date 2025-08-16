@@ -16,25 +16,33 @@ import { stampsReducer } from "./stamps/stampsSlice";
 import { authReducer } from "./auth/authSlice";
 import userReducer from "./user/userSlice";
 
-const persistConfig = {
-  key: "root",
+// const persistConfig = {
+//   key: "root",
+//   storage,
+//   whitelist: ["stamps", "auth", "user"],
+// };
+
+const authPersistConfig = {
+  key: "auth",
   storage,
-  whitelist: ["stamps", "auth", "user"],
+  whitelist: ["token"], // Зберігаємо лише токен
 };
 
 // Об'єднуємо всі наші редуктори в один кореневий
 // Використовуємо combineReducers, щоб створити єдиний редуктор
 const rootReducer = combineReducers({
   stamps: stampsReducer,
-  auth: authReducer,
+  // auth: authReducer,
+  auth: persistReducer(authPersistConfig, authReducer), // Застосовуємо persistReducer лише до auth
   user: userReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Налаштовуємо Redux-стор
 export const store = configureStore({
-  reducer: persistedReducer,
+  // reducer: persistedReducer,
+  reducer: rootReducer, // Використовуємо об'єднаний редуктор
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

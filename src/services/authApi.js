@@ -6,14 +6,25 @@ const API_URL = "https://yna-nexus-api.onrender.com";
 
 const authApi = axios.create({
   baseURL: API_URL,
+  // Додаємо цю опцію, щоб axios автоматично відправляв cookies
+  // разом з крос-доменними запитами.
+  withCredentials: true,
 });
 
 const setAuthToken = (token) => {
-  authApi.defaults.headers.common.Authorization = `Bearer ${token}`;
+  // authApi.defaults.headers.common.Authorization = `Bearer ${token}`;
+  if (token) {
+    authApi.defaults.headers.common.Authorization = `Bearer ${token}`;
+    console.log(
+      "authApi.js: Auth header set for authApi instance.",
+      authApi.defaults.headers.common.Authorization
+    );
+  }
 };
 
 const clearAuthToken = () => {
   delete authApi.defaults.headers.common.Authorization;
+  console.log("authApi.js: Auth header cleared for authApi instance.");
 };
 
 const register = async (userData) => {
@@ -31,7 +42,12 @@ const logout = async () => {
 };
 
 const refresh = async () => {
-  const response = await authApi.get("/auth/refresh");
+  console.log("authApi.js: Attempting to refresh with authApi instance.");
+  const response = await authApi.post("/auth/refresh");
+  console.log(
+    "authApi.js: Attempting to refresh with authApi instance.",
+    response
+  );
   return response.data;
 };
 
