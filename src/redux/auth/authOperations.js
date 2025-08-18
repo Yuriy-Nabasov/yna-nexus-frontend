@@ -3,11 +3,24 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { authService } from "../../services/authApi";
 
+// Helper function to clean the token string from quotes
+const cleanToken = (token) => {
+  if (
+    typeof token === "string" &&
+    token.startsWith('"') &&
+    token.endsWith('"')
+  ) {
+    return token.slice(1, -1);
+  }
+  return token;
+};
+
 export const register = createAsyncThunk(
   "auth/register",
   async (credentials, thunkAPI) => {
     try {
       const res = await authService.register(credentials);
+      res.data.accessToken = cleanToken(res.data.accessToken);
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -20,7 +33,10 @@ export const logIn = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const res = await authService.login(credentials);
-      authService.setAuthToken(res.data.accessToken);
+      const cleanedToken = cleanToken(res.data.accessToken);
+      // authService.setAuthToken(res.data.accessToken);
+      authService.setAuthToken(cleanedToken);
+      res.data.accessToken = cleanedToken;
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -49,6 +65,8 @@ export const refreshUser = createAsyncThunk(
 
     try {
       const res = await authService.refresh();
+      res.data.accessToken = cleanToken(res.data.accessToken);
+      authService.setAuthToken(res.data.accessToken); // ← Додав це
       return res.data;
     } catch (error) {
       authService.clearAuthToken();

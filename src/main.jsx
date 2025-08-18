@@ -7,6 +7,12 @@ import "./index.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.js";
 import { PersistGate } from "redux-persist/integration/react";
+// import { setupAxiosInterceptor } from "./services/axiosInstance.js";
+import "./services/axiosInstance"; // Просто імпортуємо файл, щоб він виконав налаштування
+
+// Налаштовуємо axios-інтерцептор
+// setupAxiosInterceptor(store);
+window.store = store;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

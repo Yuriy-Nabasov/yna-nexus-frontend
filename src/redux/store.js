@@ -16,6 +16,11 @@ import { stampsReducer } from "./stamps/stampsSlice";
 import { authReducer } from "./auth/authSlice";
 import userReducer from "./user/userSlice";
 
+// Додаємо імпорт authService, щоб ми могли викликати setAuthToken
+import { authService } from "../services/authApi";
+// Додаємо listenerMiddleware для обробки подій Redux
+import { createListenerMiddleware } from "@reduxjs/toolkit";
+
 // const persistConfig = {
 //   key: "root",
 //   storage,
@@ -39,6 +44,23 @@ const rootReducer = combineReducers({
 
 // const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+// Створюємо listenerMiddleware
+const listenerMiddleware = createListenerMiddleware();
+
+// Додаємо слухача, який спрацює, коли Redux Persist завантажить дані
+listenerMiddleware.startListening({
+  actionCreator: PERSIST,
+  effect: (action, listenerApi) => {
+    // Отримуємо поточний стан
+    const { auth } = listenerApi.getState();
+    const token = auth.token;
+    // Встановлюємо токен для всіх axios-запитів, якщо він існує
+    if (token) {
+      authService.setAuthToken(token);
+    }
+  },
+});
+
 // Налаштовуємо Redux-стор
 export const store = configureStore({
   // reducer: persistedReducer,
@@ -48,7 +70,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).prepend(listenerMiddleware.middleware),
 });
 
 export const persistor = persistStore(store);

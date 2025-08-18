@@ -1,6 +1,6 @@
 // src/App.jsx
 
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect, lazy, Suspense, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { persistor } from "./redux/store";
@@ -32,10 +32,14 @@ function App() {
   const dispatch = useDispatch();
   const { token, isRefreshing } = useSelector((state) => state.auth);
 
+  // 🔧 Додаємо флаг, щоб refreshUser викликався лише один раз
+  const hasRefreshed = useRef(false);
+
   useEffect(() => {
     // Перевіряємо наявність токена перед викликом refreshUser
-    if (token) {
+    if (token && !hasRefreshed.current) {
       dispatch(refreshUser());
+      hasRefreshed.current = true;
     }
   }, [dispatch, token]);
 

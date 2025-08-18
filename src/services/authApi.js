@@ -4,6 +4,7 @@ import axios from "axios";
 
 const API_URL = "https://yna-nexus-api.onrender.com";
 
+// Екземпляр axios для авторизованих запитів
 const authApi = axios.create({
   baseURL: API_URL,
   withCredentials: true,
@@ -11,7 +12,11 @@ const authApi = axios.create({
 
 const setAuthToken = (token) => {
   if (token) {
-    authApi.defaults.headers.common.Authorization = `Bearer ${token}`;
+    // Видаляємо зайві лапки, якщо вони є.
+    // Це вирішить проблему з Redux Persist.
+    const cleanedToken = token.replace(/^"(.*)"$/, "$1");
+    // authApi.defaults.headers.common.Authorization = `Bearer ${token}`;
+    authApi.defaults.headers.common.Authorization = `Bearer ${cleanedToken}`;
   }
 };
 
@@ -38,7 +43,9 @@ const refresh = async () => {
   return response.data;
 };
 
+// Експортуємо authApi разом з іншими сервісами
 export const authService = {
+  authApi,
   setAuthToken,
   clearAuthToken,
   register,
