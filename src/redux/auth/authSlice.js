@@ -2,6 +2,10 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { register, logIn, logOut, refreshUser } from "./authOperations";
+import {
+  addCollectedStamp,
+  removeCollectedStamp,
+} from "../user/userOperations";
 
 const initialState = {
   user: null,
@@ -65,7 +69,6 @@ const authSlice = createSlice({
         state.isRefreshing = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        console.log("✅ REFRESH SUCCESS:", action.payload);
         state.user = action.payload.user;
         state.token = action.payload.accessToken;
         state.isLoggedIn = true;
@@ -77,6 +80,16 @@ const authSlice = createSlice({
         state.user = null;
         state.token = null;
         state.isLoggedIn = false;
+      })
+      .addCase(addCollectedStamp.fulfilled, (state, action) => {
+        if (state.user) {
+          state.user.collectedStamps = action.payload.map((stamp) => stamp._id);
+        }
+      })
+      .addCase(removeCollectedStamp.fulfilled, (state, action) => {
+        if (state.user) {
+          state.user.collectedStamps = action.payload.map((stamp) => stamp._id);
+        }
       });
   },
 });

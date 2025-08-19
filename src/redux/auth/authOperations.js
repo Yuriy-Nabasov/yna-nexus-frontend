@@ -34,7 +34,6 @@ export const logIn = createAsyncThunk(
     try {
       const res = await authService.login(credentials);
       const cleanedToken = cleanToken(res.data.accessToken);
-      // authService.setAuthToken(res.data.accessToken);
       authService.setAuthToken(cleanedToken);
       res.data.accessToken = cleanedToken;
       return res.data;
@@ -66,7 +65,7 @@ export const refreshUser = createAsyncThunk(
     try {
       const res = await authService.refresh();
       res.data.accessToken = cleanToken(res.data.accessToken);
-      authService.setAuthToken(res.data.accessToken); // ← Додав це
+      authService.setAuthToken(res.data.accessToken);
       return res.data;
     } catch (error) {
       authService.clearAuthToken();

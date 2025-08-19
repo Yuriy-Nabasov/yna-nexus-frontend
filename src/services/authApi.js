@@ -13,9 +13,7 @@ const authApi = axios.create({
 const setAuthToken = (token) => {
   if (token) {
     // Видаляємо зайві лапки, якщо вони є.
-    // Це вирішить проблему з Redux Persist.
     const cleanedToken = token.replace(/^"(.*)"$/, "$1");
-    // authApi.defaults.headers.common.Authorization = `Bearer ${token}`;
     authApi.defaults.headers.common.Authorization = `Bearer ${cleanedToken}`;
   }
 };

@@ -32,7 +32,7 @@ function App() {
   const dispatch = useDispatch();
   const { token, isRefreshing } = useSelector((state) => state.auth);
 
-  // 🔧 Додаємо флаг, щоб refreshUser викликався лише один раз
+  // Додаємо флаг, щоб refreshUser викликався лише один раз
   const hasRefreshed = useRef(false);
 
   useEffect(() => {

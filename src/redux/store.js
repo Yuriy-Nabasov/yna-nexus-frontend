@@ -15,17 +15,8 @@ import storage from "redux-persist/lib/storage";
 import { stampsReducer } from "./stamps/stampsSlice";
 import { authReducer } from "./auth/authSlice";
 import userReducer from "./user/userSlice";
-
-// Додаємо імпорт authService, щоб ми могли викликати setAuthToken
 import { authService } from "../services/authApi";
-// Додаємо listenerMiddleware для обробки подій Redux
 import { createListenerMiddleware } from "@reduxjs/toolkit";
-
-// const persistConfig = {
-//   key: "root",
-//   storage,
-//   whitelist: ["stamps", "auth", "user"],
-// };
 
 const authPersistConfig = {
   key: "auth",
@@ -37,12 +28,9 @@ const authPersistConfig = {
 // Використовуємо combineReducers, щоб створити єдиний редуктор
 const rootReducer = combineReducers({
   stamps: stampsReducer,
-  // auth: authReducer,
   auth: persistReducer(authPersistConfig, authReducer), // Застосовуємо persistReducer лише до auth
   user: userReducer,
 });
-
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Створюємо listenerMiddleware
 const listenerMiddleware = createListenerMiddleware();

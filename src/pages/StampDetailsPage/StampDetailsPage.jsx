@@ -21,7 +21,9 @@ const StampDetailsPage = () => {
   const isLoading = useSelector((state) => state.stamps.isLoading);
   const error = useSelector((state) => state.stamps.error);
   // Колекція та статус авторизації користувача
-  const collectedStamps = useSelector((state) => state.user.collectedStamps);
+  const collectedStamps = useSelector(
+    (state) => state.auth.user?.collectedStamps
+  );
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const [isProcessing, setIsProcessing] = useState(false);
@@ -39,21 +41,29 @@ const StampDetailsPage = () => {
 
   // Функція для додавання марки до колекції
   const handleAddStamp = async () => {
-    if (!isLoggedIn) return; // Захист від неавторизованих користувачів
+    if (!isLoggedIn || isProcessing) return; // Захист від неавторизованих користувачів
     setIsProcessing(true);
-    await dispatch(addCollectedStamp(stampId));
-    setIsProcessing(false);
+    try {
+      await dispatch(addCollectedStamp(stampId)).unwrap();
+    } catch (err) {
+      console.error("Failed to add stamp:", err);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handleRemoveStamp = async () => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn || isProcessing) return;
     setIsProcessing(true);
-    await dispatch(removeCollectedStamp(stampId));
-    setIsProcessing(false);
+    try {
+      await dispatch(removeCollectedStamp(stampId)).unwrap();
+    } catch (err) {
+      console.error("Failed to remove stamp:", err);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
-  // 🐛 ВИПРАВЛЕННЯ: Додаємо перевірку, щоб уникнути помилки, якщо collectedStamps ще не завантажений.
-  // Використовуємо оператор опціонального ланцюжка `?.`
   const isStampInCollection = collectedStamps?.includes(stampId);
 
   if (isLoading) {
