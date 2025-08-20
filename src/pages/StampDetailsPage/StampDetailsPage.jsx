@@ -3,6 +3,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
 import { fetchStampById } from "../../redux/stamps/stampsSlice";
 import {
   addCollectedStamp,
@@ -57,8 +58,10 @@ const StampDetailsPage = () => {
     setIsProcessingCollected(true);
     try {
       await dispatch(addCollectedStamp(stampId)).unwrap();
+      toast.success("Марка успішно додана до колекції!");
     } catch (err) {
       console.error("Failed to add stamp to collected:", err);
+      toast.error("Сталася помилка при додаванні марки до колекції.");
     } finally {
       setIsProcessingCollected(false);
     }
@@ -69,8 +72,10 @@ const StampDetailsPage = () => {
     setIsProcessingCollected(true);
     try {
       await dispatch(removeCollectedStamp(stampId)).unwrap();
+      toast.success("Марка успішно видалена з колекції!");
     } catch (err) {
       console.error("Failed to remove stamp from collected:", err);
+      toast.error("Сталася помилка при видаленні марки з колекції.");
     } finally {
       setIsProcessingCollected(false);
     }
@@ -82,8 +87,19 @@ const StampDetailsPage = () => {
     setIsProcessingDesired(true);
     try {
       await dispatch(addDesiredStamp(stampId)).unwrap();
+      toast.success("Марка успішно додана до бажаних!");
     } catch (err) {
       console.error("Failed to add stamp to desired:", err);
+      console.log("Full error object:", err);
+
+      // Перевіряємо ім'я помилки, яке нам показує Redux Toolkit
+      if (err === "ConflictError") {
+        toast.error(
+          "Ви не можете додати цю марку в бажані, бо вона вже є у вашій колекції."
+        );
+      } else {
+        toast.error("Сталася помилка при додаванні марки до бажаних.");
+      }
     } finally {
       setIsProcessingDesired(false);
     }
@@ -94,8 +110,10 @@ const StampDetailsPage = () => {
     setIsProcessingDesired(true);
     try {
       await dispatch(removeDesiredStamp(stampId)).unwrap();
+      toast.success("Марка успішно видалена з бажаних!");
     } catch (err) {
       console.error("Failed to remove stamp from desired:", err);
+      toast.error("Сталася помилка при видаленні марки з бажаних.");
     } finally {
       setIsProcessingDesired(false);
     }
@@ -107,8 +125,19 @@ const StampDetailsPage = () => {
     setIsProcessingExchange(true);
     try {
       await dispatch(addExchangeStamp(stampId)).unwrap();
+      toast.success("Марка успішно додана до обміну!");
     } catch (err) {
       console.error("Failed to add stamp to exchange:", err);
+      console.log("Full error object:", err);
+
+      // Перевіряємо ім'я помилки, яке нам показує Redux Toolkit
+      if (err === "BadRequestError") {
+        toast.error(
+          "Ви не можете додати цю марку до обміну, бо її немає у вашій колекції."
+        );
+      } else {
+        toast.error("Сталася помилка при додаванні марки до обміну.");
+      }
     } finally {
       setIsProcessingExchange(false);
     }
@@ -119,8 +148,10 @@ const StampDetailsPage = () => {
     setIsProcessingExchange(true);
     try {
       await dispatch(removeExchangeStamp(stampId)).unwrap();
+      toast.success("Марка успішно видалена з обміну!");
     } catch (err) {
       console.error("Failed to remove stamp from exchange:", err);
+      toast.error("Сталася помилка при видаленні марки з обміну.");
     } finally {
       setIsProcessingExchange(false);
     }
@@ -146,6 +177,7 @@ const StampDetailsPage = () => {
 
   return (
     <div className={css.container}>
+      <Toaster />
       <div className={css.backButtonWrapper}>
         <button onClick={handleGoBack} className={css.backButton}>
           &larr; Повернутися
